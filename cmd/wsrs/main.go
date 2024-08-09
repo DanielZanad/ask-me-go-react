@@ -23,9 +23,12 @@ func main() {
 
 	pool, err := pgxpool.New(ctx, fmt.Sprintf(
 		"user=%s password=%s host=%s port=%s dbname=%s",
-		os.Getenv("WSRS_DATABASE_USER"), os.Getenv("WSRS_DATABASE_PASSWORD"), os.Getenv("WSRS_DATABASE_HOST"), os.Getenv("WSRS_DATABASE_PORT"), os.Getenv("WSRS_DATABASE_NAME"),
+		os.Getenv("WSRS_DATABASE_USER"),
+		os.Getenv("WSRS_DATABASE_PASSWORD"),
+		os.Getenv("WSRS_DATABASE_HOST"),
+		os.Getenv("WSRS_DATABASE_PORT"),
+		os.Getenv("WSRS_DATABASE_NAME"),
 	))
-
 	if err != nil {
 		panic(err)
 	}
@@ -46,7 +49,7 @@ func main() {
 		}
 	}()
 
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
 }
